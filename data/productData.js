@@ -2,11 +2,17 @@
 
 module.exports = [
   {
-    productId: '00000000',
     name: '蜻蜓牌 鉛筆',
     category: 'pencel',
     brand: 'tobow',
     price: 80,
     priceDiscount: 60,
+  },
+  {
+    name: 'uni 鉛筆',
+    category: 'pencel',
+    brand: 'uni',
+    price: 60,
+    priceDiscount: 40,
   },
 ];
