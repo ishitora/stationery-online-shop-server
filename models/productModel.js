@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const count = require('./countModel');
 
 const productSchema = new mongoose.Schema({
-  productId: {
+  numberId: {
     type: String,
   }, //商品的8位數ID
   name: { type: String, require: true, trim: true, maxlength: 50 }, //商品名稱
@@ -29,15 +29,15 @@ const productSchema = new mongoose.Schema({
 
 //商品建立時(未有ID)則建立加入個ID
 productSchema.pre('save', async function (next) {
-  if (!this.productId) {
+  if (!this.numberId) {
     const doc = await count
       .findOneAndUpdate(
         {},
-        { $inc: { numberId: 1 } },
+        { $inc: { productId: 1 } },
         { upsert: true, new: true }
       )
       .lean();
-    this.productId = doc.numberId.toString().padStart(8, '0');
+    this.numberId = doc.productId.toString().padStart(8, '0');
   }
 
   next();

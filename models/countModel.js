@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const countSchema = new mongoose.Schema({
-  numberId: {
+  productId: {
     type: Number,
     require: true,
     default: 0,
