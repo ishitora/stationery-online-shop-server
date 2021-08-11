@@ -23,11 +23,12 @@ const productSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now(),
-    select: false,
   }, //上架日期
 });
 
-//商品建立時(未有ID)則建立加入個ID
+productSchema.index({ numberId: 1 });
+
+//商品建立時(未有數字ID)則建立加入數字ID
 productSchema.pre('save', async function (next) {
   if (!this.numberId) {
     const doc = await count
