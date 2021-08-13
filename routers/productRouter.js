@@ -1,5 +1,8 @@
 const express = require('express');
-const productControllers = require('../controllers/productControllers');
+const {
+  getProductPageData,
+  searchProducts,
+} = require('../controllers/productControllers');
 
 const router = express.Router();
 
@@ -8,6 +11,6 @@ const router = express.Router();
 // POST /tour/234fad4/reviews
 // GET /tour/234fad4/reviews
 
-router.route('/search').get(productControllers);
-
+router.route('/search').get(searchProducts);
+router.route('/product/:numberId').get(getProductPageData);
 module.exports = router;

@@ -1,6 +1,20 @@
 const product = require('../models/productModel');
 const category = require('../models/categoryModel');
 
+//獲得單個商品的分類列表 ex:鉛筆  文具/書寫用具/鉛筆
+const getCategoryList = async (categoryName) => {
+  try {
+    const doc = await category.findOne({ name: categoryName }).lean();
+    const categoryList = doc.path.split(',');
+    categoryList.shift();
+    categoryList[categoryList.length - 1] = doc.name;
+    return categoryList;
+  } catch (e) {
+    console.error(e);
+    return '';
+  }
+};
+
 const searchProducts = async (req, res) => {
   try {
     const categoryFilter = await getCategoryArray(req.query.category);
@@ -28,6 +42,30 @@ const searchProducts = async (req, res) => {
       results,
       data: {
         data: doc,
+      },
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
+const getProductPageData = async (req, res) => {
+  try {
+    let doc = await product
+      .findOne({ numberId: req.params.numberId })
+      .select('-createdAt -__v -smallImage -_id')
+      .lean();
+
+    const results = doc.length;
+    const categoryList = await getCategoryList(doc.category);
+
+    res.status(200).json({
+      status: 'success',
+      results,
+      data: {
+        ...doc,
+        categoryList: categoryList,
       },
     });
   } catch (e) {
@@ -71,4 +109,4 @@ const getFilter = (query) => {
   return filter;
 };
 
-module.exports = searchProducts;
+module.exports = { searchProducts, getProductPageData };
