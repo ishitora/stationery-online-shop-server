@@ -12,5 +12,5 @@ const router = express.Router();
 // GET /tour/234fad4/reviews
 
 router.route('/search').get(searchProducts);
-router.route('/product/:numberId').get(getProductPageData);
+router.route('/:numberId').get(getProductPageData);
 module.exports = router;

@@ -1,10 +1,10 @@
-const product = require('../models/productModel');
-const category = require('../models/categoryModel');
+const Product = require('../models/productModel');
+const Category = require('../models/categoryModel');
 
 //獲得單個商品的分類列表 ex:鉛筆  文具/書寫用具/鉛筆
 const getCategoryList = async (categoryName) => {
   try {
-    const doc = await category.findOne({ name: categoryName }).lean();
+    const doc = await Category.findOne({ name: categoryName }).lean();
     const categoryList = doc.path.split(',');
     categoryList.shift();
     categoryList[categoryList.length - 1] = doc.name;
@@ -21,8 +21,7 @@ const searchProducts = async (req, res) => {
     const softOption = getSoftOption(req.query.s);
     const filter = getFilter(req.query);
 
-    let doc = await product
-      .find({ $and: [filter, categoryFilter] })
+    let doc = await Product.find({ $and: [filter, categoryFilter] })
       .sort(softOption)
       .select({
         numberId: 1,
@@ -52,8 +51,7 @@ const searchProducts = async (req, res) => {
 
 const getProductPageData = async (req, res) => {
   try {
-    let doc = await product
-      .findOne({ numberId: req.params.numberId })
+    let doc = await Product.findOne({ numberId: req.params.numberId })
       .select('-createdAt -__v -smallImage -_id')
       .lean();
 
@@ -78,11 +76,9 @@ const getCategoryArray = async (query) => {
   if (!query) {
     return {};
   }
-  let categoryArray = await category
-    .find({
-      $or: [{ name: query }, { path: new RegExp(`,${query},`) }],
-    })
-    .lean();
+  let categoryArray = await Category.find({
+    $or: [{ name: query }, { path: new RegExp(`,${query},`) }],
+  }).lean();
   categoryArray = categoryArray.map((categoryDoc) => categoryDoc.name);
 
   return { category: { $in: categoryArray } };
