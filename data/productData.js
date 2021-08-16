@@ -7,6 +7,8 @@ module.exports = [
     brand: 'tombow',
     price: 60,
     priceDiscount: 50,
+    images: ['https://i.imgur.com/TuAKxqS.jpeg'],
+    smallImage: 'https://i.imgur.com/TuAKxqS.jpeg',
   },
   {
     name: 'Pentel orenznero 自動鉛筆',
@@ -14,13 +16,17 @@ module.exports = [
     brand: 'pentel',
     price: 900,
     priceDiscount: 800,
+    images: ['https://i.imgur.com/yZsQFlg.jpeg'],
+    smallImage: 'https://i.imgur.com/yZsQFlg.jpeg',
   },
   {
-    name: 'platinum 白金 3776鋼筆 金尖',
+    name: 'platinum 白金 3776鋼筆 鋼尖',
     category: 'pencel',
     brand: 'platinum',
     price: 3000,
     priceDiscount: 2800,
+    images: ['https://i.imgur.com/Cchhd2f.jpg'],
+    smallImage: 'https://i.imgur.com/Cchhd2f.jpg',
   },
   {
     name: 'zebra sarasa復古色鋼珠筆',
@@ -28,6 +34,8 @@ module.exports = [
     brand: 'zebra',
     price: 40,
     priceDiscount: 30,
+    images: ['https://i.imgur.com/VaJI9w1.jpeg'],
+    smallImage: 'https://i.imgur.com/VaJI9w1.jpeg',
   },
   {
     name: 'PILOT 百樂Iroshizuku 色彩雫',
@@ -35,6 +43,8 @@ module.exports = [
     brand: 'pilot',
     price: 250,
     priceDiscount: 240,
+    images: ['https://i.imgur.com/8aO7aQy.jpg'],
+    smallImage: 'https://i.imgur.com/8aO7aQy.jpg',
   },
   {
     name: 'TOMBOW MONO 橡皮擦',
@@ -42,6 +52,8 @@ module.exports = [
     brand: 'tombow',
     price: 20,
     priceDiscount: 15,
+    images: ['https://i.imgur.com/9Uwbotu.jpeg'],
+    smallImage: 'https://i.imgur.com/9Uwbotu.jpeg',
   },
   {
     name: 'KUM 黃銅雙孔削筆器',
@@ -49,6 +61,8 @@ module.exports = [
     brand: 'kum',
     price: 200,
     priceDiscount: 180,
+    images: ['https://i.imgur.com/ex3Dd1i.jpg'],
+    smallImage: 'https://i.imgur.com/ex3Dd1i.jpg',
   },
   {
     name: 'midori MD筆記本 A5方格',
@@ -56,13 +70,17 @@ module.exports = [
     brand: 'midori',
     price: 300,
     priceDiscount: 270,
+    images: ['https://i.imgur.com/ENoJ8XR.jpg'],
+    smallImage: 'https://i.imgur.com/ENoJ8XR.jpg',
   },
   {
-    name: '2021 HOBO A5手帳',
+    name: 'HOBO 2022手帳 動物森友會款 A5尺寸',
     category: 'diary',
     brand: 'hobo',
-    price: 3500,
-    priceDiscount: 3000,
+    price: 4500,
+    priceDiscount: 4000,
+    images: ['https://i.imgur.com/llUNWkm.jpg'],
+    smallImage: 'https://i.imgur.com/llUNWkm.jpg',
   },
   {
     name: 'KOKUYO Campus 活頁紙 120張 A5',
@@ -70,6 +88,8 @@ module.exports = [
     brand: 'kokuyo',
     price: 150,
     priceDiscount: 120,
+    images: ['https://i.imgur.com/kuelpZy.jpg'],
+    smallImage: 'https://i.imgur.com/kuelpZy.jpg',
   },
   {
     name: 'MIDORI 鋁尺 15cm',
@@ -77,6 +97,8 @@ module.exports = [
     brand: 'midori',
     price: 200,
     priceDiscount: 150,
+    images: ['https://i.imgur.com/5DTxJcz.jpeg'],
+    smallImage: 'https://i.imgur.com/5DTxJcz.jpeg',
   },
   {
     name: 'PLUS 剪刀 ',
@@ -84,6 +106,8 @@ module.exports = [
     brand: 'plus',
     price: 150,
     priceDiscount: 140,
+    images: ['https://i.imgur.com/cOvWzhq.jpg'],
+    smallImage: 'https://i.imgur.com/cOvWzhq.jpg',
   },
   {
     name: 'KOKUYO  B5 26孔活頁夾 ',
@@ -91,6 +115,8 @@ module.exports = [
     brand: 'kokuyo',
     price: 250,
     priceDiscount: 200,
+    images: ['https://i.imgur.com/ZDG5AMV.jpg'],
+    smallImage: 'https://i.imgur.com/ZDG5AMV.jpg',
   },
   {
     name: 'LIHIT LAB. 貓咪造型筆筒 ',
@@ -98,6 +124,8 @@ module.exports = [
     brand: 'lihitlab.',
     price: 500,
     priceDiscount: 400,
+    images: ['https://i.imgur.com/3Vv2Bb0.jpg'],
+    smallImage: 'https://i.imgur.com/3Vv2Bb0.jpg',
   },
   {
     name: 'KING JIM PEGGY 直立收納架',
@@ -105,5 +133,7 @@ module.exports = [
     brand: 'kingjim',
     price: 2000,
     priceDiscount: 1600,
+    images: ['https://i.imgur.com/Iyt7vGJ.jpg'],
+    smallImage: 'https://i.imgur.com/Iyt7vGJ.jpg',
   },
 ];
