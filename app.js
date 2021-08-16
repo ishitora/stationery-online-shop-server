@@ -10,14 +10,16 @@ const categoryData = require('./data/categoryData');
 
 const productRouter = require('./routers/productRouter');
 const userRouter = require('./routers/userRouter');
-const app = express();
+const accountRouter = require('./routers/accountRouter');
 
-//開發測試用的路由
+const app = express();
 
 app.use(express.json());
 app.use('/product', productRouter);
 app.use('/user', userRouter);
+app.use('/account', accountRouter);
 
+//開發測試用的路由
 app.get('/alldata', async (req, res) => {
   try {
     const doc = await Product.find({});
