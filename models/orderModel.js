@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const categorySchema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
   buyerId: {
     //訂單的買家ID
     type: String,
@@ -12,6 +12,14 @@ const categorySchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  paymentMethod: {
+    type: String,
+    enum: ['貨到付款', '信用卡', '超商取貨'],
+    default: '貨到付款',
+  },
+  address: {
+    type: String,
+  },
   status: {
     type: String,
     enum: ['處理中', '已出貨', '已完成'],
@@ -19,6 +27,6 @@ const categorySchema = new mongoose.Schema({
   }, //訂單狀態
 });
 
-const Category = mongoose.model('category', categorySchema);
+const Order = mongoose.model('order', orderSchema);
 
-module.exports = Category;
+module.exports = Order;

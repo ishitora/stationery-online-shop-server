@@ -4,20 +4,23 @@ const Product = require('./models/productModel');
 const Category = require('./models/categoryModel');
 const Count = require('./models/countModel');
 const User = require('./models/userModel');
+const Order = require('./models/orderModel');
 
 const productData = require('./data/productData');
 const categoryData = require('./data/categoryData');
 
-const productRouter = require('./routers/productRouter');
-const userRouter = require('./routers/userRouter');
 const accountRouter = require('./routers/accountRouter');
+const productRouter = require('./routers/productRouter');
+const orderRouter = require('./routers/orderRouter');
+const userRouter = require('./routers/userRouter');
 
 const app = express();
 
 app.use(express.json());
-app.use('/product', productRouter);
-app.use('/user', userRouter);
 app.use('/account', accountRouter);
+app.use('/product', productRouter);
+app.use('/order', orderRouter);
+app.use('/user', userRouter);
 
 //開發測試用的路由
 app.get('/alldata', async (req, res) => {
@@ -47,6 +50,7 @@ app.delete('/deleteall', async (req, res) => {
     await Count.deleteMany({});
     await Category.deleteMany({});
     await User.deleteMany({});
+    await Order.deleteMany({});
     res.status(201).json({ message: '刪除成功' });
   } catch (e) {
     console.error(e);

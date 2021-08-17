@@ -7,7 +7,10 @@ const {
   updateCart,
   addCart,
   clearCart,
-} = require('../controllers/cartController');
+  getAddress,
+  addAddress,
+  deleteAddress,
+} = require('../controllers/accountController');
 
 const router = express.Router();
 
@@ -19,5 +22,11 @@ router
   .patch(addCart)
   .put(updateCart)
   .delete(clearCart);
+
+router
+  .route('/address')
+  .get(getAddress)
+  .patch(addAddress)
+  .delete(deleteAddress);
 
 module.exports = router;

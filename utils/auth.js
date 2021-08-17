@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 
 const newToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.SECRET, {
-    expiresIn: '1 day',
+    expiresIn: '7 day',
   });
 };
 
