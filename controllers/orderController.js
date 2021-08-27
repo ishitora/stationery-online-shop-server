@@ -17,7 +17,7 @@ const createOrder = async (req, res) => {
       address: req.body.address,
       totalAmount,
     });
-    return res.status(201).json({ status: 'success', data: doc });
+    return res.status(201).json(doc);
   } catch (e) {
     console.error(e);
     res.status(400).end();

@@ -37,11 +37,8 @@ const searchProducts = async (req, res) => {
     const results = doc.length;
 
     res.status(200).json({
-      status: 'success',
       results,
-      data: {
-        data: doc,
-      },
+      product: doc,
     });
   } catch (e) {
     console.error(e);
@@ -55,13 +52,10 @@ const getProductPageData = async (req, res) => {
       .select('-createdAt -__v -smallImage -_id')
       .lean();
 
-    const results = doc.length;
     const categoryList = await getCategoryList(doc.category);
 
     res.status(200).json({
-      status: 'success',
-      results,
-      data: {
+      product: {
         ...doc,
         categoryList: categoryList,
       },

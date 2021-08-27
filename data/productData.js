@@ -12,7 +12,7 @@ module.exports = [
   },
   {
     name: 'Pentel orenznero 自動鉛筆',
-    category: 'pencel',
+    category: 'mechanical-pencil',
     brand: 'pentel',
     price: 900,
     priceDiscount: 800,
@@ -21,7 +21,7 @@ module.exports = [
   },
   {
     name: 'platinum 白金 3776鋼筆 鋼尖',
-    category: 'pencel',
+    category: 'fountain-pen',
     brand: 'platinum',
     price: 3000,
     priceDiscount: 2800,
@@ -74,7 +74,7 @@ module.exports = [
     smallImage: 'https://i.imgur.com/ENoJ8XR.jpg',
   },
   {
-    name: 'HOBO 2022手帳 動物森友會款 A5尺寸',
+    name: 'HOBO 2022手帳 A5 動物森友會款 ',
     category: 'diary',
     brand: 'hobo',
     price: 4500,

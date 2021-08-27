@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 
 const Product = require('./models/productModel');
 const Category = require('./models/categoryModel');
@@ -8,6 +9,7 @@ const Order = require('./models/orderModel');
 
 const productData = require('./data/productData');
 const categoryData = require('./data/categoryData');
+const randomProducts = require('./data/randomProducts');
 
 const accountRouter = require('./routers/accountRouter');
 const productRouter = require('./routers/productRouter');
@@ -16,6 +18,8 @@ const userRouter = require('./routers/userRouter');
 
 const app = express();
 
+app.disable('x-powered-by');
+app.use(cors());
 app.use(express.json());
 app.use('/account', accountRouter);
 app.use('/product', productRouter);
@@ -35,9 +39,10 @@ app.get('/alldata', async (req, res) => {
 
 app.post('/add', async (req, res) => {
   try {
-    const doc = await Product.create(productData);
+    await Product.create(productData);
+    await Product.create(randomProducts);
     await Category.create(categoryData);
-    res.status(201).json({ message: JSON.stringify(doc) });
+    res.status(201).json({ message: '新增完畢' });
   } catch (e) {
     console.error(e);
     res.status(400).end();
