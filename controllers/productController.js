@@ -35,10 +35,15 @@ const searchProducts = async (req, res) => {
       .lean();
 
     const results = doc.length;
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 12;
+    const limitDoc = doc.filter((product, index) => {
+      return index + 1 > (page - 1) * limit && index + 1 <= page * limit;
+    });
 
     res.status(200).json({
       results,
-      product: doc,
+      product: limitDoc,
     });
   } catch (e) {
     console.error(e);
@@ -95,7 +100,7 @@ const getSoftOption = (query) => {
 
 const getFilter = (query) => {
   //其他篩選選項 目前只有品牌
-  const filter = query.b ? { brand: query.b } : {};
+  const filter = query.brand ? { brand: query.brand } : {};
   return filter;
 };
 
