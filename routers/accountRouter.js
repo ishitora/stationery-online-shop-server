@@ -6,6 +6,7 @@ const {
   getCart,
   updateCart,
   addCart,
+  deleteCart,
   clearCart,
   getAddress,
   addAddress,
@@ -19,9 +20,11 @@ router.use(protect); //以下路線須登入才能操作
 router
   .route('/cart')
   .get(getCart)
-  .patch(addCart)
+  .post(addCart)
   .put(updateCart)
-  .delete(clearCart);
+  .patch(deleteCart);
+
+router.route('/clearCart').delete(clearCart);
 
 router
   .route('/address')

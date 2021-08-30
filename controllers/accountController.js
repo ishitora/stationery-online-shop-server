@@ -1,30 +1,60 @@
 //處理需登入的各種操作
 const User = require('../models/userModel');
+const Product = require('../models/productModel');
 
 const getCart = async (req, res) => {
   try {
-    return res.status(201).json({ status: 'success', data: req.user.cart });
+    const cartData = await getProductListByCart(req.user.cart);
+    return res.status(201).json({ cart: cartData });
   } catch (e) {
     console.error(e);
     res.status(400).end();
   }
 };
 
+//使用使用者的購物車 來獲取完整購物車資料
+const getProductListByCart = async (cart) => {
+  try {
+    const numberIdArray = cart.map((product) => product.productId);
+
+    const res = await Product.find({ numberId: { $in: numberIdArray } })
+      .select({
+        _id: 0,
+        name: 1,
+        smallImage: 1,
+        priceDiscount: 1,
+        numberId: 1,
+      })
+      .lean();
+
+    const cartList = res.map((product) => {
+      return {
+        ...product,
+        quantity: cart.find((p) => p.productId === product.numberId).quantity,
+      };
+    });
+
+    return cartList;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
 const addCart = async (req, res) => {
   try {
     const { user } = req;
-    //找出是否有重複的
-    const repeated = user.cart.filter(
+    console.log(req.body);
+    const repeated = user.cart.find(
       (item) => item.productId === req.body.productId
     );
     let newCart;
-    if (repeated.length === 1) {
+    if (repeated) {
       //有重複的
       newCart = user.cart.filter(
         (item) => item.productId !== req.body.productId
       );
-      repeated[0].quantity += parseInt(req.body.quantity);
-      newCart.push(repeated[0]);
+      repeated.quantity += parseInt(req.body.quantity);
+      newCart.push(repeated);
     } else {
       newCart = [
         ...user.cart,
@@ -35,12 +65,16 @@ const addCart = async (req, res) => {
       ];
     }
 
-    await User.findByIdAndUpdate(user, { cart: newCart }, { new: true })
+    const newUser = await User.findByIdAndUpdate(
+      user,
+      { cart: newCart },
+      { new: true }
+    )
       .select('-_id -password -__v -createdAt -updatedAt')
       .lean()
       .exec();
-
-    return res.status(201).json({ status: 'success', data: newCart });
+    console.log(newUser);
+    return res.status(201).json({ cart: newUser.cart });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -51,16 +85,46 @@ const updateCart = async (req, res) => {
   try {
     const { user } = req;
 
-    const doc = await User.findByIdAndUpdate(
+    let newCart = user.cart.filter(
+      (item) => item.productId !== req.body.productId
+    );
+    newCart.push(req.body);
+
+    const newUser = await User.findByIdAndUpdate(
       user,
-      { cart: req.body },
+      { cart: newCart },
       { new: true }
     )
       .select('-_id -password -__v -createdAt -updatedAt')
       .lean()
       .exec();
 
-    return res.status(201).json({ status: 'success', data: doc.cart });
+    return res.status(201).json({ cart: newUser.cart });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
+const deleteCart = async (req, res) => {
+  try {
+    const { user } = req;
+    console.log(req.body);
+    const newCart = user.cart.filter(
+      (item) => item.productId !== req.body.productId
+    );
+
+    const newUser = await User.findByIdAndUpdate(
+      user,
+      { cart: newCart },
+      { new: true }
+    )
+      .select('-_id -password -__v -createdAt -updatedAt')
+      .lean()
+      .exec();
+
+    console.log(newCart);
+    return res.status(201).json({ cart: newUser.cart });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -85,7 +149,7 @@ const clearCart = async (req, res) => {
 
 const getAddress = async (req, res) => {
   try {
-    return res.status(201).json({ status: 'success', data: req.user.address });
+    return res.status(201).json({ address: req.user.address });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -109,7 +173,7 @@ const addAddress = async (req, res) => {
       newAddress = doc.address;
     }
 
-    return res.status(201).json({ status: 'success', data: newAddress });
+    return res.status(201).json({ address: newAddress });
   } catch (e) {
     console.error(e);
     res.status(400).end();
@@ -140,6 +204,7 @@ const deleteAddress = async (req, res) => {
 module.exports = {
   updateCart,
   addCart,
+  deleteCart,
   clearCart,
   getCart,
   getAddress,

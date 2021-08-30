@@ -27,7 +27,7 @@ const protect = async (req, res, next) => {
   try {
     payload = await verifyToken(token);
   } catch (e) {
-    return res.status(401).end();
+    return res.status(401).send({ message: '錯誤' });
   }
 
   const user = await User.findById(payload.id)
@@ -36,10 +36,11 @@ const protect = async (req, res, next) => {
     .exec();
 
   if (!user) {
-    return res.status(401).end();
+    return res.status(401).send({ message: '找不到user' });
   }
 
   req.user = user;
+
   next();
 };
 

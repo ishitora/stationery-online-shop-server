@@ -32,7 +32,7 @@ const signIn = async (req, res) => {
 
   try {
     const user = await User.findOne({ email: req.body.email })
-      .select('-_id  -__v -viewHistory')
+      .select(' -__v -viewHistory')
       .exec();
 
     if (!user) {
@@ -47,6 +47,7 @@ const signIn = async (req, res) => {
 
     const token = newToken(user);
     const newUser = { ...user._doc };
+    delete newUser._id; //生成TOKEN時需要_id 在前面必須留著_id
     delete newUser.password;
     return res.status(201).send({ ...newUser, token });
   } catch (e) {
