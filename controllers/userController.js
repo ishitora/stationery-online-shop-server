@@ -25,7 +25,7 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
   console.log('req=', req);
   if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: 'need email and password' });
+    return res.status(400).send({ message: '必須輸入email和密碼' });
   }
 
   const invalid = { message: 'email或密碼錯誤' };
@@ -52,7 +52,7 @@ const signIn = async (req, res) => {
     return res.status(201).send({ ...newUser, token });
   } catch (e) {
     console.error(e);
-    res.status(500).end();
+    res.status(500).send({ message: '伺服器發生錯誤' });
   }
 };
 

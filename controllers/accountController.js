@@ -210,4 +210,5 @@ module.exports = {
   getAddress,
   addAddress,
   deleteAddress,
+  getProductListByCart,
 };

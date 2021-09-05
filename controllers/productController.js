@@ -18,7 +18,7 @@ const getCategoryList = async (categoryName) => {
 const searchProducts = async (req, res) => {
   try {
     const categoryFilter = await getCategoryArray(req.query.category);
-    const softOption = getSoftOption(req.query.s);
+    const softOption = getSoftOption(req.query.soft);
     const filter = getFilter(req.query);
 
     let doc = await Product.find({ $and: [filter, categoryFilter] })

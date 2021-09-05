@@ -1,5 +1,5 @@
 const Order = require('../models/orderModel');
-const Product = require('../models/productModel');
+const { getProductListByCart } = require('./accountController');
 
 const createOrder = async (req, res) => {
   try {
@@ -8,15 +8,16 @@ const createOrder = async (req, res) => {
     if (user.cart.length === 0) {
       return res.status(400).send({ message: '購物車為空' });
     }
-
-    const totalAmount = await calculateTotalAmount(user.cart);
+    const productList = await getProductListByCart(user.cart);
+    const totalAmount = calculateTotalAmount(productList);
 
     const doc = await Order.create({
       buyerId: user.id,
-      products: user.cart,
-      address: req.body.address,
+      ...req.body,
+      productList,
       totalAmount,
     });
+
     return res.status(201).json(doc);
   } catch (e) {
     console.error(e);
@@ -24,31 +25,11 @@ const createOrder = async (req, res) => {
   }
 };
 
-const calculateTotalAmount = async (cart) => {
-  const productId = cart.map((product) => {
-    return product.productId;
-  });
-
-  const productList = await Product.find({ numberId: { $in: productId } })
-    .select({
-      numberId: 1,
-      priceDiscount: 1,
-      _id: 0,
-    })
-    .lean();
-
-  const productObj = {};
-  productList.map((product) => {
-    productObj[product.numberId] = product.priceDiscount;
-  });
-
-  const totalAmount = cart.reduce((accumulator, currentValue) => {
-    return (
-      accumulator + productObj[currentValue.productId] * currentValue.quantity
-    );
-  }, 0);
-
-  return totalAmount;
+const calculateTotalAmount = (productList) => {
+  return productList.reduce(
+    (acc, cur) => acc + cur.quantity * cur.priceDiscount,
+    0
+  );
 };
 
 module.exports = {

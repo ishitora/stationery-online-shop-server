@@ -4,26 +4,69 @@ const count = require('./countModel');
 
 const productSchema = new mongoose.Schema({
   numberId: {
+    //商品的8位數ID
     type: String,
-  }, //商品的8位數ID
-  name: { type: String, require: true, trim: true, maxlength: 50 }, //商品名稱
-  category: { type: String, required: true }, //所屬的分類
-  images: { type: [String], default: [] }, //商品的圖片
-  smallImage: { type: String, default: '' }, //縮圖
-  brand: { type: String, require: true, trim: true }, //品牌
-  price: { type: Number, default: 0 }, //原價
-  priceDiscount: { type: Number, default: 0 }, //折扣後的價格
-  stockQuantity: { type: Number, require: true, default: 0 }, //商品庫存
+  },
+  name: {
+    //商品名稱
+    type: String,
+    require: true,
+    trim: true,
+    maxlength: 50,
+  },
+  category: {
+    //所屬的分類
+    type: String,
+    required: true,
+  },
+  images: {
+    //商品的圖片
+    type: [String],
+    default: [],
+  },
+  smallImage: {
+    //縮圖
+    type: String,
+    default: '',
+  },
+  brand: {
+    //品牌
+    type: String,
+    require: true,
+    trim: true,
+  },
+  price: {
+    //原價
+    type: Number,
+    default: 0,
+  },
+  priceDiscount: {
+    //折扣後的價格
+    type: Number,
+    default: 0,
+  },
+  stockQuantity: {
+    //商品庫存
+    type: Number,
+    require: true,
+    default: 0,
+  },
   status: {
+    //商品狀態
     type: String,
     enum: ['可購買', '暫無庫存', '下架中'],
     default: '暫無庫存',
-  }, //商品狀態
-  details: { type: String, default: '無詳細介紹' }, //詳細商品介紹
+  },
+  details: {
+    //商品介紹
+    type: String,
+    default: '無詳細介紹',
+  },
   createdAt: {
+    //上架日期
     type: Date,
     default: Date.now(),
-  }, //上架日期
+  },
 });
 
 productSchema.index({ numberId: 1 });
