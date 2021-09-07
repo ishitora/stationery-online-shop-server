@@ -34,6 +34,11 @@ const searchProducts = async (req, res) => {
       })
       .lean();
 
+    //如果有搜尋關鍵字   以關鍵字進行過濾
+    if (req.query.keyword) {
+      doc = keywordFilter(doc, req.query.keyword);
+    }
+
     const results = doc.length;
     const page = req.query.page || 1;
     const limit = req.query.limit || 12;
@@ -71,6 +76,38 @@ const getProductPageData = async (req, res) => {
   }
 };
 
+//依照req要求給特定數的隨機資料 純給前端展示用
+const getRandomProducts = async (req, res) => {
+  try {
+    const productCount = req.params.count;
+    let doc = await Product.find({ status: '可購買' })
+      .select({
+        numberId: 1,
+        name: 1,
+        status: 1,
+        price: 1,
+        priceDiscount: 1,
+        smallImage: 1,
+        _id: 0,
+      })
+      .lean();
+    const randomProducts = [];
+
+    for (let i = 0; i < productCount; i++) {
+      let randomNum = Math.floor(Math.random() * doc.length);
+      randomProducts.push(doc[randomNum]);
+      doc = doc.splice(randomNum, 1);
+    }
+
+    res.status(200).json({
+      product: randomProducts,
+    });
+  } catch (e) {
+    console.error(e);
+    res.status(400).end();
+  }
+};
+
 const getCategoryArray = async (query) => {
   if (!query) {
     return {};
@@ -98,10 +135,19 @@ const getSoftOption = (query) => {
   return softOptions[select];
 };
 
+const keywordFilter = (productList, keyword) => {
+  //mongoDB對中文的文字搜尋效果不佳，用函式手動篩
+  const keywordArray = keyword.split(' ');
+  const filteredProductList = productList.filter((product) => {
+    return keywordArray.every((word) => product.name.includes(word));
+  });
+  return filteredProductList;
+};
+
 const getFilter = (query) => {
   //其他篩選選項 目前只有品牌
   const filter = query.brand ? { brand: query.brand } : {};
   return filter;
 };
 
-module.exports = { searchProducts, getProductPageData };
+module.exports = { searchProducts, getProductPageData, getRandomProducts };
