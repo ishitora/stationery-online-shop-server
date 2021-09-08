@@ -12,7 +12,7 @@ module.exports = [
     path: ',stationery,',
   },
   {
-    name: 'pencel',
+    name: 'pencil',
     nameCHT: '鉛筆',
     path: ',stationery,writing,',
   },
