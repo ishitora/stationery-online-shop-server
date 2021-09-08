@@ -96,7 +96,7 @@ const getRandomProducts = async (req, res) => {
     for (let i = 0; i < productCount; i++) {
       let randomNum = Math.floor(Math.random() * doc.length);
       randomProducts.push(doc[randomNum]);
-      doc = doc.splice(randomNum, 1);
+      doc.splice(randomNum, 1);
     }
 
     res.status(200).json({
