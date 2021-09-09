@@ -65,10 +65,18 @@ const deleteAllData = async (req, res) => {
   }
 };
 
+const testProtect = async (req, res, next) => {
+  if (req.headers.authorization !== process.env.PASSWORD) {
+    return res.status(401).send({ message: '有密碼才能操作' });
+  }
+  next();
+};
+
 module.exports = {
   getAllProduct,
   getAllOrder,
   addDefaultData,
   addRandomData,
   deleteAllData,
+  testProtect,
 };
