@@ -5,7 +5,6 @@ const accountRouter = require('./routers/accountRouter');
 const productRouter = require('./routers/productRouter');
 const orderRouter = require('./routers/orderRouter');
 const userRouter = require('./routers/userRouter');
-
 const testRouter = require('./routers/testRouter');
 
 const app = express();
